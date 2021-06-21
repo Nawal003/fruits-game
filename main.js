@@ -1,4 +1,9 @@
 const canvas = document.getElementById('canvas1');
+let modal = document.getElementById("modal");
+
+
+let start = document.getElementById("start");
+let text = document.getElementById("text");
 
 const ctx = canvas.getContext('2d');
 
@@ -6,12 +11,14 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let score = 0;
-ctx.font = '50px Georgia';
+ctx.font = '50px Cinzel, serif';
 const keys = [];
 
 const bgd = new Image();
 bgd.src = './images/backgd.png';
 
+
+//taille du personnage
 const player = {
     x: canvas.width / 2,
     y: 700,
@@ -23,8 +30,16 @@ const player = {
     moving: false
 };
 
+
+//image du personnage
 const playerSprite = new Image();
 playerSprite.src = './images/ryuk.png';
+
+start.addEventListener("click", function () {
+    modal.style.display = "none";
+    init();
+    animate();
+});
 
 
 
@@ -33,7 +48,8 @@ function init() {
         fruitsArray.push(new Fruits());
     }
 }
-init();
+
+// init();
 
 function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH) {
     ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH)
@@ -51,26 +67,25 @@ function animate() {
     //     // console.log(player.x);
     // }
     collisions();
-  
     handleFruits();
-  
-  
     requestAnimationFrame(animate);
     ctx.fillStyle = 'white';
     ctx.fillText('Score: ' + score, 10, 50);
+    endGame()
 }
-animate();
+// animate();
 
 
 window.addEventListener('keydown', function (e) {
     keys[e.key] = true;
-    // console.log(keys);
+    console.log(keys);
 
 });
 window.addEventListener('keyup', function (e) {
     delete keys[e.key];
 });
 
+//fonction pour bouger le personnage 
 function movePlayer() {
     if (keys['ArrowRight'] && player.x < canvas.width - player.width) {
         player.x += player.speed;
@@ -82,6 +97,7 @@ function movePlayer() {
 const bang = new Image();
 bang.src = './images/bang.png';
 
+//fonction collision entre le personnage et les fruits
 function collisions() {
     for (let i = 0; i < fruitsArray.length; i++) {
         if (fruitsArray[i].x < player.x + player.width && fruitsArray[i].x + fruitsArray[i].size > player.x && fruitsArray[i].y < player.y + player.height && fruitsArray[i].size + fruitsArray[i].y > player.y) {
@@ -94,6 +110,16 @@ function collisions() {
         }
         (console.log(('collision')))
     }
+}
+function endGame() {
+    if (score == 5) {
+       score="super tu as réussi à attraper 20 fruits!!"
+
+        setTimeout(() => {
+            location.reload();
+        }, 2000);
+    };
+
 }
 
 
