@@ -4,14 +4,14 @@ body {
   box-sizing: border-box;
 }
 
-div {
+#modal {
   display: block;
   width: 100vw;
   height: 100vh;
   background: url("/images/backgd.png");
   overflow: hidden;
 }
-div article {
+#modal article {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,7 +27,7 @@ div article {
   text-align: center;
   cursor: pointer;
 }
-div article h1 {
+#modal article h1 {
   font: 5em "Cinzel", serif;
 }
 
